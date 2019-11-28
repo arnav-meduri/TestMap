@@ -35,11 +35,12 @@
       });
       
       var places = ["Coffee shop", "Gas station", "Food", "Hotel", "Parks and Outdoors"];
+      var places2 = ["Dog Parks", "Dog Waste Stations", "Water Sheds", "Pet Hospitals", "Parks and Outdoors"];
       
       var select = document.createElement("select","");
        select.setAttribute("class", "esri-widget esri-select");
        select.setAttribute("style", "width: 175px; font-family: Avenir Next W00; font-size: 1em");
-      places.forEach(function(p){
+      places2.forEach(function(p){
         var option = document.createElement("option");
         option.value = p;
         option.innerHTML = p;
@@ -51,12 +52,27 @@
       var locator = new Locator({
          url: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
       });
-  
+      
+      // Map string to a existing category
+      function mapPlace(category) {
+         if (category.trim() === "Dog Parks".trim()) {
+           return "Coffee shop"; 
+         } else if (category.trim() === "Dog Waste Stations".trim()) {
+           return "Gas station";
+         } else if (category.trim() === "Water Sheds".trim()) {
+           return "Food";
+         } else if (category.trim() === "Pet Hospitals".trim()) {
+           return "Hotel";
+         } else {
+           return "Parks and Outdoors";
+         }
+      }
+      
       // Find places and add them to the map
       function findPlaces(category, pt) {
         locator.addressToLocations({
           location: pt,
-          categories: [category],
+          categories: [mapPlace(category)],
           maxLocations: 25,
           outFields: ["Place_addr", "PlaceName"]
         })
