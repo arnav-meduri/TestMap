@@ -34,12 +34,17 @@
         zoom: 13
       });
       
-      var places = ["Coffee shop", "Gas station", "Food", "Hotel", "Parks and Outdoors"];
-      var places2 = ["Dog Parks", "Dog Waste Stations", "Water Sheds", "Pet Hospitals", "Parks and Outdoors"];
+      //var places = ["Coffee shop", "Gas station", "Food", "Hotel", "Parks and Outdoors"];
+      //var places2 = ["Dog Parks", "Dog Waste Stations", "Water Sheds", "Pet Hospitals", "Parks and Outdoors"];
+      var places = ["Wild Animal Park", "Nature Reserve", "Other Parks and Outdoors", "Parks", 
+                    "Parks and Outdoors", "Veterinarian", "Water Treatment", "Pet Store", "Lake", "Stream", 
+                    "Reservoir", "Lagoon", "Other Water Feature"];
       
       var select = document.createElement("select","");
        select.setAttribute("class", "esri-widget esri-select");
        select.setAttribute("style", "width: 175px; font-family: Avenir Next W00; font-size: 1em");
+      
+//    places2.forEach(function(p){
       places2.forEach(function(p){
         var option = document.createElement("option");
         option.value = p;
@@ -72,7 +77,8 @@
       function findPlaces(category, pt) {
         locator.addressToLocations({
           location: pt,
-          categories: [mapPlace(category)],
+//          categories: [mapPlace(category)],
+          categories: [category],
           maxLocations: 25,
           outFields: ["Place_addr", "PlaceName"]
         })
